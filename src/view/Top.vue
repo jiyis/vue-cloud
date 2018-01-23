@@ -14,13 +14,10 @@
             </ul>
         </div>
     </div>
-    <banner></banner>
 </div>
 </template>
 
 <script>
-import banner from '../components/Banner';
-
 const headerBg = require('../assets/images/header_bg.png');
 
 export default {
@@ -38,9 +35,6 @@ export default {
         contact: '联系我们',
       },
     };
-  },
-  components: {
-    banner,
   },
 };
 </script>
@@ -74,7 +68,7 @@ export default {
     .menu {
         li{
             float: left;
-            width: 8%;
+            width: 15%;
             list-style: none;
             color: #333333;
             padding-left: 7%;
@@ -83,7 +77,7 @@ export default {
                 display: block;
                 color: #333333;
                 text-decoration: none;
-                padding: 17px 0 16px;
+                padding: 17px 0 13px;
                 cursor: pointer;
                 font-weight: 800px; 
                 font-size: 16px;

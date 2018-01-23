@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    <banner></banner>
     <div class="top">
       <ul>
         <li v-for="(value, key) in category" :key="key" class="category">
@@ -25,25 +26,25 @@
           <div class="title-red">公司新闻</div>
           <div class="content">
             <a class="title" href="#">机构网培训</a>
-            <span class="desc">萨达所大所大所大大所</span>
+            <span class="desc">萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所</span>
             <span class="time">2018.1.21</span>
           </div>
           <div class="content">
             <a class="title" href="#">机构网培训</a>
-            <span class="desc">萨达所大所大所大大所</span>
+            <span class="desc">萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所</span>
             <span class="time">2018.1.21</span>
           </div>
           <div class="content">
             <a class="title" href="#">机构网培训</a>
-            <span class="desc">萨达所大所大所大大所</span>
+            <span class="desc">萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所</span>
             <span class="time">2018.1.21</span>
           </div>
         </div>
         <div class="about">
-          <span class="title-red">关于我们</span>
+          <div class="title-red">关于我们<a href="#" class="more">更多>></a></div>
           <img src="../assets/images/about.png" class="about-img" />
-          <span>
-            平时我们常常在国外报纸、英文文章、国外网站看见文章中英文单词或拼音的首个字母大写，或文章中拼音或英文单词字母全小写或全大写，今天DIVCSS5为大家介绍让英文单词或拼音首个字母大写、全文中英文单词全大写或小写的方法教程.
+          <span class="about-content">
+            平时我们常常在国外报纸、英文文章、国外网站看见文章中英文单词或拼音的首个字母大写，或文章中拼音或英文单词字母全小写或全大写，今天DIVCSS5为大家介绍让英文单词或拼音首个字母大写、全文中英文单词全大写或小写的方法教程.章、国外网站看见文章中英文单词或拼音的首个字母大写，或文章中拼音或英
           </span>
         </div>
       </div> 
@@ -52,6 +53,8 @@
 </template>
 
 <script>
+import banner from '../components/Banner';
+
 export default {
   name: 'Index',
   data() {
@@ -63,6 +66,9 @@ export default {
         knowledge: '知识天地',
       },
     };
+  },
+  components: {
+    banner,
   },
 };
 </script>
@@ -82,11 +88,21 @@ export default {
       width: 1200px;
       margin: 0 auto;
       .company-news, .about {
-        margin-top: 60px;
+        margin-top: 40px;
         width: 50%;
         float: left;
         color: #eb2232;
         font-size: 22px;
+      }
+      .title-red {
+        width: 92%;
+        font-weight: bold;
+        .more {
+          color: #808080;
+          font-size: 12px;
+          float: right;
+          padding-top: 8px;
+        }
       }
       .company-news {
         font-weight: normal;
@@ -97,25 +113,42 @@ export default {
           font-size: 18px;
           font-weight: normal;
         }
-        .title-red {
-          font-weight: bold;
-        }
         .content {
-          padding-top: 30px;
+          padding-top: 25px;
+          padding-bottom: 10px;
+          width: 90%;
+          color: #808080;
+          border-bottom: 1px solid #d3d3d3;
+          &:last-child {
+            border-bottom: none;
+          }
         }
         .desc {
           display: block;
-          padding: 10px 0;
+          padding: 10px 0 0;
           color: #808080;
           font-size: 14px;
+          line-height: 26px;
         }
         .time {
           display: block;
-          font-size: 14px;
-          float: right;
+          font-size: 13px;
+          text-align: right;
         }
 
       }
+      .about-img {
+        padding-top: 25px;
+      }
+      .about-content {
+        width: 93%;
+        display: block;
+        color: #333333;
+        font-size: 14px;
+        padding-top:10px;
+        line-height: 32px;
+      }
+      
     }
   }
   
@@ -129,6 +162,9 @@ export default {
       margin: 0 auto;
       text-align: center;
       border-right: 1px solid #eeeeee;
+      &:last-child {
+        border-right: none;
+      }
       .category-top {
         width: 160px;
         margin: 0 auto;
@@ -147,7 +183,7 @@ export default {
           color: #333333;
           height: 20px;
           padding-top: 20px;
-          padding-bottom: 15px;
+          padding-bottom: 40px;
         }
         .subtitle {
           font-size: 16px;

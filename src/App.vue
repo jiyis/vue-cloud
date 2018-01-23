@@ -2,7 +2,7 @@
   <div id="app">
     <headers></headers>
     <router-view/>
-    <footer></footer>
+    <footers></footers>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import headers from './view/Top';
+import footers from './view/Bottom';
 import './assets/css/reset.css';
 
 Vue.prototype.$axios = axios;
@@ -17,6 +18,7 @@ export default {
   name: 'app',
   components: {
     headers,
+    footers,
   },
 };
 </script>
