@@ -8,10 +8,12 @@
         </div>
         <div class="nav">
             <ul class="menu">
-                <li  v-for="(item, index) in menus" :key="index">
-                    <a href="#"> {{ item }} </a>
+                <li v-for="(item, index) in menus" :key="index">
+                    <router-link :to="item.url">{{ item.title }}</router-link>
                 </li>
+                <div style="clear:both;"></div>
             </ul>
+            <div class="login"><Icon type="ios-person" size="25"></Icon><router-link to="/login">登录</router-link></div>
         </div>
     </div>
 </div>
@@ -27,12 +29,30 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       headerBg,
       menus: {
-        home: '首页',
-        course: '在线课程',
-        news: '新闻资讯',
-        teams: '合作伙伴',
-        jobs: '人才招聘',
-        contact: '联系我们',
+        home: {
+          title: '首页',
+          url: '/',
+        },
+        course: {
+          title: '在线课程',
+          url: '/course',
+        },
+        news: {
+          title: '新闻资讯',
+          url: '/news',
+        },
+        teams: {
+          title: '合作伙伴',
+          url: '/pages/teams',
+        },
+        jobs: {
+          title: '人才招聘',
+          url: '/pages/jobs',
+        },
+        contact: {
+          title: '联系我们',
+          url: '/pages/contact',
+        },
       },
     };
   },
@@ -64,20 +84,36 @@ export default {
         right: 0;
         bottom: 0;
         margin:auto;
+        .login {
+            display: block;
+            float: left;
+            height: 50px;
+            i {
+                padding:16px 8px;
+            }
+            a {
+                display: block;
+                float: right;
+                line-height: 57px;
+            }
+        }
     }
     .menu {
+        display: block;
+        width: 90%;
+        float: left;
         li{
             float: left;
             width: 15%;
             list-style: none;
             color: #333333;
-            padding-left: 7%;
+            padding-left: 3%;
             text-align: center;
             a {
                 display: block;
                 color: #333333;
                 text-decoration: none;
-                padding: 17px 0 13px;
+                padding: 17px 0 9px;
                 cursor: pointer;
                 font-weight: 800px; 
                 font-size: 16px;

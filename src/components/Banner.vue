@@ -1,57 +1,42 @@
 <template>
   <div class="swiper">  
-    <swiper :options="swiperOption">  
-      <swiper-slide v-for="(item, index) in banners" :key="index"><img :src="item.titlepic"></swiper-slide>  
-      <!-- Optional controls -->
-      <div class="swiper-pagination" slot="pagination"></div>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>
-    </swiper>  
+    <Carousel
+        v-model="value3"
+        :autoplay="setting.autoplay"
+        :autoplay-speed="setting.autoplaySpeed"
+        :dots="setting.dots"
+        :radius-dot="setting.radiusDot"
+        :trigger="setting.trigger"
+        :arrow="setting.arrow">
+        <CarouselItem v-for="item in banners" :key="item.id">
+            <div class="demo-carousel"><img :src="item.titlepic"></div>
+        </CarouselItem>
+    </Carousel>
   </div>  
 </template>
 <script>
-import 'swiper/dist/css/swiper.css';
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import config from '../config/config.json';
 
 export default {
   data() {
     return {
       banners: '',
-      swiperOption: {
+      value3: 0,
+      setting: {
         autoplay: true,
-        speed: 500,
-        loop: true,
-        grabCursor: true,
-        scrollbar: '.swiper-scrollbar',
-        mousewheelControl: true,
-        observeParents: true,
-        debugger: true,
-        centeredSlides: true,
-        paginationClickable: true,
-        prevButton: '.swiper-button-prev',
-        nextButton: '.swiper-button-next',
-        slidesPerView: 1,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+        autoplaySpeed: 5000,
+        dots: 'inside',
+        radiusDot: true,
+        trigger: 'click',
+        arrow: 'hover',
       },
     };
-  },
-  components: {
-    swiper,
-    swiperSlide,
   },
   created() {
     this.$axios.get(`${config.apiDomain}/banners`).then((response) => {
       this.banners = response.data;
     }, (error) => {
-      console.log(error);
+      this.$Message.error(error.toString());
     });
   },
 };
@@ -63,16 +48,27 @@ export default {
     height: 500px;
     width: 100%;
   }
-  .swiper-container .swiper-pagination-bullet {
+  .ivu-carousel-dots li button.radius {
     background: #ffffff !important;
     opacity: 1;
     width: 15px;
     height: 15px;
   }
-  .swiper-container .swiper-pagination-bullet-active {
-    background: #000000 !important;
-    opacity: 0.8;
+  .ivu-carousel-dots li {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
   }
+  .ivu-carousel-dots li.ivu-carousel-active>button.radius {
+    width: 15px;
+  }
+  .ivu-carousel-dots .ivu-carousel-active button.radius {
+    opacity: 0.8;
+    width: 15px;
+    height: 15px;
+    background: #000000 !important; 
+  }
+
   .swiper-button-prev, .swiper-container-rtl .swiper-button-next, .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
     background: url('../assets/images/swiper.png');
   }
@@ -82,5 +78,14 @@ export default {
   }
   .swiper-button-next {
     background-position:37px 233px; 
+  }
+  .ivu-carousel-dots-inside {
+    bottom:20px;
+  }
+  .demo-carousel {
+    img {
+      height: 500px;
+      width: auto;
+    }
   }
 </style>

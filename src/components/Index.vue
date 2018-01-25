@@ -6,17 +6,12 @@
         <li v-for="(value, key) in category" :key="key" class="category">
           <div class="category-top">
             <span class="titlepic"></span>
-            <span class="title">{{ value }}</span>
-            <span class="subtitle">{{ key }}</span>
+            <span class="title">{{ value.title }}</span>
+            <span class="subtitle">{{ value.subTitle }}</span>
           </div>
-          <div class="news">
-            <div><span class="icon">1</span><a href="#">平时我们常常在国外报纸,在国外报纸</a></div>
-            <div><span class="icon">2</span><a href="#">平时我们常常在国外报纸,在国外报纸</a></div>
-            <div><span class="icon">3</span><a href="#">平时我们常常在国外报纸,在国外报纸</a></div>
+          <div class="news" v-html="value.description">
           </div>
-          <div class="more">
-            更多 >>
-          </div>
+          <router-link :to="'/pages/'+key" class="more">更多 >></router-link>
         </li>
       </ul>
     </div>
@@ -24,27 +19,17 @@
       <div class="bottom">
         <div class="company-news">
           <div class="title-red">公司新闻</div>
-          <div class="content">
-            <a class="title" href="#">机构网培训</a>
-            <span class="desc">萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所</span>
-            <span class="time">2018.1.21</span>
-          </div>
-          <div class="content">
-            <a class="title" href="#">机构网培训</a>
-            <span class="desc">萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所</span>
-            <span class="time">2018.1.21</span>
-          </div>
-          <div class="content">
-            <a class="title" href="#">机构网培训</a>
-            <span class="desc">萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所大大所萨达所大所大所</span>
-            <span class="time">2018.1.21</span>
+          <div class="content" v-for="(item, key) in news" :key="key">
+            <router-link class="title" :to="'/news/'+item.id">{{ item.title }}</router-link>
+            <a class="title" href="#"></a>
+            <span class="desc" v-html="item.description"></span>
+            <span class="time">{{ item.created_at}}</span>
           </div>
         </div>
         <div class="about">
           <div class="title-red">关于我们<a href="#" class="more">更多>></a></div>
-          <img src="../assets/images/about.png" class="about-img" />
-          <span class="about-content">
-            平时我们常常在国外报纸、英文文章、国外网站看见文章中英文单词或拼音的首个字母大写，或文章中拼音或英文单词字母全小写或全大写，今天DIVCSS5为大家介绍让英文单词或拼音首个字母大写、全文中英文单词全大写或小写的方法教程.章、国外网站看见文章中英文单词或拼音的首个字母大写，或文章中拼音或英
+          <img :src="contact.titlepic" class="about-img" />
+          <span class="about-content" v-html="contact.description">
           </span>
         </div>
       </div> 
@@ -54,21 +39,60 @@
 
 <script>
 import banner from '../components/Banner';
+import config from '../config/config.json';
 
 export default {
   name: 'Index',
   data() {
     return {
       category: {
-        teaching: 'Stemsky授课',
-        cooperation: '学校合作',
-        'R&D': '课程研发',
-        knowledge: '知识天地',
+        teaching: {
+          title: 'Stemsky授课',
+          subTitle: 'teaching',
+          description: '',
+        },
+        cooperation: {
+          title: '学校合作',
+          subTitle: 'cooperation',
+          description: '',
+        },
+        research: {
+          title: '课程研发',
+          subTitle: 'R&D',
+          description: '',
+        },
+        knowledge: {
+          title: '知识天地',
+          subTitle: '',
+          description: '',
+        },
       },
+      news: '',
+      contact: '',
     };
   },
   components: {
     banner,
+  },
+  created() {
+    this.$axios.all([
+      this.$axios.get(`${config.apiDomain}/pages/teaching`),
+      this.$axios.get(`${config.apiDomain}/pages/cooperation`),
+      this.$axios.get(`${config.apiDomain}/pages/research`),
+      this.$axios.get(`${config.apiDomain}/pages/knowledge`),
+      this.$axios.get(`${config.apiDomain}/lists/news?limit=3`),
+      this.$axios.get(`${config.apiDomain}/pages/contact`),
+    ]).then(
+      this.$axios.spread((teaching, cooperation, research, knowledge, newsContent, contact) => {
+        this.category.teaching.description = teaching.data.description;
+        this.category.cooperation.description = cooperation.data.description;
+        this.category.research.description = research.data.description;
+        this.category.knowledge.description = knowledge.data.description;
+        this.news = newsContent.data.data;
+        this.contact = contact.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      }));
   },
 };
 </script>
@@ -161,6 +185,7 @@ export default {
       width: 24%;
       margin: 0 auto;
       text-align: center;
+      height: 361px;
       border-right: 1px solid #eeeeee;
       &:last-child {
         border-right: none;
@@ -170,7 +195,7 @@ export default {
         margin: 0 auto;
         .titlepic {
           display: block;
-          background: url('../assets/images/category.png') center;
+          background: url('../assets/images/category.png');
           width: 70px;
           height: 70px;
         }
@@ -191,7 +216,7 @@ export default {
           height: 20px;
           text-transform:uppercase;
         }
-      }
+      }​​
       &:first-child {
         .titlepic {
           background-position: 0px 70px;
@@ -214,6 +239,11 @@ export default {
       }
       .news {
         width: 90%;
+        height: 130px;
+        font-size: 14px;
+        line-height: 26px;
+        text-indent: 16px;
+        text-align: left;
         margin: 30px auto 0;
         div {
           padding: 15px 0;
