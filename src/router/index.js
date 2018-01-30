@@ -6,6 +6,7 @@ import CourseDetail from '../components/CourseDetail';
 import News from '../components/News';
 import NewsDetail from '../components/NewsDetail';
 import PageDetail from '../components/PageDetail';
+import CenterDetail from '../components/CenterDetail';
 import Login from '../view/Login';
 
 Vue.use(Router);
@@ -21,15 +22,16 @@ export default new Router({
       },
     },
     {
-      path: '/course',
+      path: '/courses',
       name: 'Course',
       component: Course,
       meta: {
         layout: true,
+        requireAuth: true,
       },
     },
     {
-      path: '/course/:id',
+      path: '/courses/:id',
       name: 'CourseDetail',
       component: CourseDetail,
       meta: {
@@ -64,6 +66,14 @@ export default new Router({
       path: '/pages/:category',
       name: 'PageDetail',
       component: PageDetail,
+      meta: {
+        layout: true,
+      },
+    },
+    {
+      path: '/center',
+      name: 'CenterDetail',
+      component: CenterDetail,
       meta: {
         layout: true,
       },

@@ -2,3 +2,7 @@
   font-size: 20px;
   padding-right: 80px;
 }
+.ivu-tabs-ink-bar {
+  width: 100px !important;
+  margin-left: 5px;
+}

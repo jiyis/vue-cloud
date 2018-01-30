@@ -7,12 +7,12 @@
 			<form>
 				<div class="login-ic">
 					<i ></i>
-					<input type="text" v-model="userInfo.name" placeholder="用户名"  value="用户名" onFocus="this.value = '';" />
+					<input type="text" v-model="userInfo.name"  value="" />
 					<div class="clear"> </div>
 				</div>
 				<div class="login-ic">
 					<i class="icon"></i>
-					<input type="password" v-model="userInfo.password" placeholder="密码"  value="" onFocus="this.value = '';"/>
+					<input type="password" v-model="userInfo.password" placeholder="密码"  value="" />
 					<div class="clear"> </div>
 				</div>
 			
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       userInfo: {
-        name: '用户名',
+        name: '',
         password: '',
       },
       show: false,
@@ -42,11 +42,11 @@ export default {
   },
   methods: {
     doLogin() {
-      if (this.name === '') {
+      if (this.userInfo.name === '') {
         this.$Message.error('用户名不能为空');
         return false;
       }
-      if (this.password === '') {
+      if (this.userInfo.password === '') {
         this.$Message.error('密码名不能为空');
         return false;
       }
@@ -59,7 +59,7 @@ export default {
           this.$router.push({ path: '/' });
         })
         .catch((err) => {
-          this.$Message.error(err.toString());
+          this.$Message.error(err.response.data.error);
         });
       return true;
     },

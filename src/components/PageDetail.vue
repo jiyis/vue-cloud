@@ -21,11 +21,21 @@ export default {
     left,
   },
   created() {
-    this.$axios.get(`${config.apiDomain}/pages/${this.$route.params.category}`).then((response) => {
-      this.content = response.data.content;
-    }, (error) => {
-      this.$Message.error(error.toString());
-    });
+    this.getData();
+  },
+  watch: {
+    $route() {
+      this.getData();
+    },
+  },
+  methods: {
+    getData() {
+      this.$axios.get(`${config.apiDomain}/pages/${this.$route.params.category}`).then((response) => {
+        this.content = response.data.content;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+    },
   },
 };
 </script>

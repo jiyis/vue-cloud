@@ -13,13 +13,28 @@
                 </li>
                 <div style="clear:both;"></div>
             </ul>
-            <div class="login"><Icon type="ios-person" size="25"></Icon><router-link to="/login">登录</router-link></div>
+            <div class="login">
+                <Icon type="ios-person" class="myicon" size="25"></Icon>
+                <router-link to="/login" v-if="!name">登录</router-link>
+                <Dropdown v-if="name">
+                    <a href="javascript:void(0)">
+                        {{ name }}
+                        <Icon type="arrow-down-b"></Icon>
+                    </a>
+                    <DropdownMenu slot="list">
+                        <DropdownItem @click.native="center">个人中心</DropdownItem>
+                        <DropdownItem @click.native="logout">注销</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import config from '../config/config.json';
+
 const headerBg = require('../assets/images/header_bg.png');
 
 export default {
@@ -28,6 +43,7 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       headerBg,
+      name: '',
       menus: {
         home: {
           title: '首页',
@@ -35,7 +51,7 @@ export default {
         },
         course: {
           title: '在线课程',
-          url: '/course',
+          url: '/courses',
         },
         news: {
           title: '新闻资讯',
@@ -56,11 +72,43 @@ export default {
       },
     };
   },
+  created() {
+    this.init();
+  },
+  watch: {
+    $route() {
+      this.init();
+    },
+  },
+  methods: {
+    init() {
+      this.name = localStorage.name;
+    },
+    center() {
+      this.$router.push('center');
+    },
+    logout() {
+      this.$axios.post(`${config.apiDomain}/auth/logout`)
+          .then(() => {
+            localStorage.removeItem('name');
+            localStorage.removeItem('token_expire');
+            localStorage.removeItem('token');
+            this.$router.go(0);
+          })
+          .catch((err) => {
+            this.$Message.error(err.toString());
+          });
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+    .myicon {
+        display: block !important;
+        float: left;
+    }
     .header{
        width: 100%;
        max-width: 1920px;
@@ -88,12 +136,14 @@ export default {
             display: block;
             float: left;
             height: 50px;
+            width: 9%;
             i {
                 padding:16px 8px;
             }
             a {
                 display: block;
-                float: right;
+                float: left;
+                padding-left: 5px;
                 line-height: 57px;
             }
         }

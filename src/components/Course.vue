@@ -1,60 +1,144 @@
 <template>
   <div class="content">
     <div class="filter">
-      <div class="filter-tab" v-for="(item, key) in items" :key="key">
-        <span class="title">适用年龄：</span>
+      <div class="filter-tab" v-for="(item, key) in category" :key="key">
+        <span class="title">{{ item }}：</span>
         <div class="filter-item">
-          <span class="item"><a class="active" href="#">全部</a></span>
-          <span class="item"><a href="#">科学</a></span>
-          <span class="item"><a href="#">技术</a></span>
-          <span class="item"><a href="#">工程</a></span>
-          <span class="item"><a href="#">数学</a></span>
+          <span class="item"><a @click="searchCategory(key, {name:'全部',id: ''})" :class="activeFilter[key] === '全部' ? 'active' : ''" href="javascript:void(0)">全部</a></span>
+          <span class="item" v-for="(value) in categoryItem[key]" :key="value.id" >
+            <a href="javascript:void(0)" @click="searchCategory(key, value)" :class="activeFilter[key] === value.name ? 'active' : ''">{{value.name}}</a>
+          </span>
         </div>
       </div>
     </div>
     <div class="hot-tab">
-      <a href="#" class="title active">近期热门</a>
-      <a href="#" class="title">最受欢迎</a>
+      <a href="javascript:void(0)" :class="sortActive ? 'active' : 'title'" @click="sortActive=true;sortCourse('updated_at')">近期热门</a>
+      <a href="javascript:void(0)" :class="!sortActive ? 'active' : 'title'" @click="sortActive=false;sortCourse('click')">最受欢迎</a>
     </div>
     <div class="search">
-      <i-input class="search-input" size="large" placeholder="请输入课程名称">
-        <i-button slot="append" icon="ios-search"></i-button>
+      <i-input class="search-input" v-model="search" size="large" placeholder="请输入课程名称">
+        <i-button slot="append" icon="ios-search" @click="searchCourse"></i-button>
       </i-input>
     </div>
     <div class="list-content">
       <ul>
-        <li v-for="(item, key) in items" :key="key">
-          <img class="titlepic" src="../assets/images/course.jpg">
+        <li v-for="(item, key) in courses.data" :key="key">
+          <img class="titlepic" :src="item.titlepic">
           <div class="right">
-            <span class="title">精彩演讲稿从演讲开始</span>
-            <span class="content">我们花费了几年的时间，终于让 Bootstrap 4 到来了！简直无法用言语来描述整个团队和我对于这个版本的兴奋之情，但是我会尽全力。感谢每个人，特别是整个团队，以及所有对项目代码进行贡献和提出问题的每个人。谢谢你们。从上个正式版本开始，我们致力于让我们的 CSS 几个关键的部分变稳定
-            </span>
+            <span class="title"><router-link :to="'/courses/'+item.id">{{ item.name }}</router-link></span>
+            <span class="content" v-html="item.description"></span>
             <span class="icon">
-              <Icon type="android-contacts"></Icon>11课时
-              <Icon type="clock"></Icon>120分钟
-              <Tag color="blue">小学</Tag>
-              <Tag color="green">幼儿园</Tag>
+              <Icon type="android-contacts"></Icon>{{ item.period }}课时
+              <Icon type="clock"></Icon>{{ item.minute }}分钟
+              <Tag color="blue" v-for="value in _.filter(item.category, { 'type': '适用年龄'})" :key="value.id">{{ value.name }}</Tag>
             </span>
           </div>
           <div class="clear"></div>
         </li>
       </ul>
-      <Page :total="100" show-elevator class="pagation"></Page>
+      <Page :total="total " :page-size="per_page" @on-change="changepage"  show-elevator class="pagation"></Page>
     </div>
   </div>
 </template>
 
 <script>
+import config from '../config/config.json';
+
 export default {
   name: 'Course',
   data() {
     return {
-      items: {
-        teaching: 'Stemsky授课',
-        cooperation: '学校合作',
-        'R&D': '课程研发',
+      category: {
+        age: '适用年龄',
+        stem: 'STEM侧重',
+        price: '价格类型',
       },
+      categoryItem: {
+        age: '',
+        stem: '',
+        price: '',
+      },
+      courses: '',
+      total: 5,
+      per_page: 10,
+      search: '',
+      searchCate: '',
+      filterItem: {},
+      activeFilter: {
+        age: '全部',
+        stem: '全部',
+        price: '全部',
+      },
+      sortActive: true,
+      sortFilter: 'updated',
     };
+  },
+  created() {
+    this.$axios.all([
+      this.$axios.get(`${config.apiDomain}/category/1`),
+      this.$axios.get(`${config.apiDomain}/category/2`),
+      this.$axios.get(`${config.apiDomain}/category/3`),
+      this.$axios.get(`${config.apiDomain}/courses`),
+    ]).then(
+      this.$axios.spread((age, stem, price, courses) => {
+        this.categoryItem.age = age.data.data;
+        this.categoryItem.stem = stem.data.data;
+        this.categoryItem.price = price.data.data;
+        this.courses = courses.data;
+        this.total = courses.data.meta.total;
+        this.per_page = courses.data.meta.per_page;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      }));
+  },
+  methods: {
+    changepage(index) {
+      this.$axios.get(`${config.apiDomain}/courses?page=${index}`).then((response) => {
+        this.courses = response.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+    },
+    searchCourse() {
+      if (!this.search) {
+        this.$Message.error('请输入搜索关键字');
+        return false;
+      }
+
+      const params = `search=name:${this.search};description:${this.search}&searchFields=name:like;description:like`;
+      let query = `?${params}`;
+      if (this.searchCate) {
+        query = `${this.searchCate}&${params}`;
+      }
+      this.$axios.get(`${config.apiDomain}/courses/search${query}`).then((response) => {
+        this.courses = response.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+      return true;
+    },
+    searchCategory(key, item) {
+      this.activeFilter[key] = item.name;
+      this.filterItem[key] = item.id;
+
+      const query = this._.reduce(this._.pickBy(this.filterItem), (result, value, index) => `${result}${index}=${value}&`, '?');
+      this.searchCate = this._.trim(query, '&');
+
+      this.$axios.get(`${config.apiDomain}/courses/search${this.searchCate}`).then((response) => {
+        this.courses = response.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+      return true;
+    },
+    sortCourse(key) {
+      const query = `?orderBy=${key}&sortedBy=desc`;
+      this.$axios.get(`${config.apiDomain}/courses/search${query}`).then((response) => {
+        this.courses = response.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+    },
   },
 };
 </script>
@@ -83,10 +167,11 @@ export default {
           float: left;
           color: #333333;
           font-weight: bold;
+          width: 10%;
         }
         .filter-item {
           .item {
-            padding-left: 30px;
+            padding-left: 0px;
             a{
               padding: 6px 18px;
               color: #333333;

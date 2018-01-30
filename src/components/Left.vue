@@ -4,9 +4,9 @@
       <div class="topic">新闻动态&nbsp;&nbsp;&nbsp;News</div>
       <div class="blank">
         <ul>
-          <li><a href="/News/CompanyNews">Stemsky新闻</a></li> 
-          <li><a href="/News/IndustryNews">行业新闻</a></li> 
-          <li><a href="/News/Report">专题报道</a></li> 
+          <li v-for="item in category" :key="item.id">
+            <router-link  :to="'/'+item.url">{{ item.name }}</router-link>
+          </li> 
         </ul>
       </div>
     </div>
@@ -15,8 +15,9 @@
       <div class="topic">最新资讯&nbsp;&nbsp;&nbsp;News</div>
       <div class="list">
         <dl>
-          <dd><a href="/html/4108361941.html" target="_blank" title="特朗普给两亿拨款 推进STEM教育">特朗普给两亿拨款 推进STE</a></dd>
-          <dd><a href="/html/0123571317.html" target="_blank" title="教育的大国利器：美国教育起死回生的大杀器，STEM模式">教育的大国利器：美国教育起死</a></dd><dd><a href="/html/452801811.html" target="_blank" title="美国的stem教育要求的实质是什么？">美国的stem教育要求的实质</a></dd>
+          <dd v-for="(item, key) in news.slice(0, 3)" :key="key">
+            <router-link target="_blank"  :to="'/news/'+item.id">{{ item.title }}</router-link>
+          </dd>
         </dl>
       </div>
     </div>
@@ -33,12 +34,30 @@
   </div>
 </template>
 <script>
+import config from '../config/config.json';
+
 export default {
   name: 'left',
   data() {
     return {
-      name: '111',
+      category: '',
+      news: '',
+      contact: '',
     };
+  },
+  created() {
+    this.$axios.all([
+      this.$axios.get(`${config.apiDomain}/category/4`),
+      this.$axios.get(`${config.apiDomain}/lists/news`),
+      this.$axios.get(`${config.apiDomain}/pages/contact`),
+    ]).then(
+      this.$axios.spread((category, news, contact) => {
+        this.category = category.data.data;
+        this.news = news.data.data;
+        this.contact = contact.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      }));
   },
 };
 </script>

@@ -6,11 +6,12 @@
       <div class="Position"><span>你的位置：<a href="/">首页</a> &gt; <a href="/News/">新闻动态</a></span></div>
       <div class="content">
         <ul>
-          <li class="item" v-for="(item, key) in items" :key="key">
-            <a href="#">特朗普给两亿拨款 推进STEM教育</a><span class="time">[2017-12-26]</span>
+          <li class="item" v-for="(item, key) in news.data" :key="key">
+            <router-link target="_blank"  :to="'/news/'+item.id">{{ item.title }}</router-link>
+            <span class="time">[{{ item.created_at }}]</span>
           </li>
         </ul>
-        <Page :total="100" show-elevator class="pagation"></Page>
+        <Page :total="total" :page-size="per_page" @on-change="changepage"  show-elevator class="pagation"></Page>
       </div>
     </div>
   </div>
@@ -18,21 +19,37 @@
 </template>
 <script>
 import left from './Left';
+import config from '../config/config.json';
 
 export default {
   name: 'news',
   data() {
     return {
-      name: '111',
-      items: {
-        name: '1',
-        key: '1',
-        test: '1',
-      },
+      news: '',
+      total: 5,
+      per_page: 10,
     };
   },
   components: {
     left,
+  },
+  created() {
+    this.$axios.get(`${config.apiDomain}/lists/news`).then((response) => {
+      this.news = response.data;
+      this.total = response.data.meta.total;
+      this.per_page = response.data.meta.per_page;
+    }, (error) => {
+      this.$Message.error(error.toString());
+    });
+  },
+  methods: {
+    changepage(index) {
+      this.$axios.get(`${config.apiDomain}/lists/news?page=${index}`).then((response) => {
+        this.news = response.data;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+    },
   },
 };
 </script>

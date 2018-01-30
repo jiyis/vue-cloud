@@ -12,9 +12,8 @@
        <h3 class="panel-title"><span style="color:#2e87c5;"><strong>课程简介</strong></span></h3> 
       </div> 
       <div class="panel-body"> 
-       <ul class="media-list"> 
-        <li>我们生活在五彩斑斓的世界里，学生对鲜艳的色彩会感觉敏感，对色彩的变化更为好奇。本课程以学生生活中遇到的实际问题为出发点，让学生在寓教于乐的科学活动中探究紫薯汁与生活中常见物质的变色反应，让学生体验科学与我们实际生活的紧密联系，进而培养学生的问题意识和问题解决能力。</li> 
-       </ul> 
+       <div class="media-list" v-html="course.description"> 
+       </div> 
       </div> 
      </div> 
      <div class="panel panel-default sub-articles"> 
@@ -22,12 +21,8 @@
        <h3 class="panel-title"><span style="color:#2e87c5;"><strong>课程目标</strong></span></h3> 
       </div> 
       <div class="panel-body"> 
-       <ul class="media-list"> 
-        <li>科学：学生通过不同的卡通图片认识不同的颜色，通过观察自然现象了解颜色间的相互转换；</li> 
-        <li class="cur">技术：学生通过将醋和碱加入紫薯汁中并观察变化，了解在酸、碱条件下花青素颜色的变化；</li> 
-        <li>工程：制作简易的酸碱指示剂；</li> 
-        <li>数学：学会估算一滴管与一滴的数量关系； 其他：学生在活动的过程中能够与小组其他成员进行有效的沟通和合作，主动表达和分享其观点。</li> 
-       </ul> 
+       <div class="media-list" v-html="course.target"> 
+       </div> 
       </div> 
      </div> 
      <div class="panel panel-default sub-articles"> 
@@ -35,20 +30,8 @@
        <h3 class="panel-title"><span style="color:#2e87c5;"><strong>课程大纲</strong></span></h3> 
       </div> 
       <div class="panel-body"> 
-       <ul class="media-list"> 
-        <li><strong>第一阶段</strong><br /></li> 
-        <li class="cur">1. 什么是花青素 </li> 
-        <li>2. 生活中含花青素的物质 </li> 
-        <li><strong>第二阶段</strong><br /></li> 
-        <li>1. 器材包介绍 </li> 
-        <li>2. 器材使用安全须知 </li> 
-        <li>3. 课堂纪律 </li> 
-        <li>4. 将紫薯汁作为酸碱指示剂，检验常见物质的酸碱性 </li> 
-        <li>5. 纪录颜色变化等其他实验数据 </li> 
-        <li><strong>第三阶段</strong><br /></li> 
-        <li>1. 分析结果 </li> 
-        <li>2. 课堂讨论</li> 
-       </ul> 
+       <div class="media-list" v-html="course.syllabus"> 
+       </div> 
       </div> 
      </div> 
     </div> 
@@ -63,6 +46,7 @@ export default {
       title: 'sds',
     };
   },
+  props: ['course'],
 };
 </script>
 <style scoped>

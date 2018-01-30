@@ -52,3 +52,15 @@ a{
 a:active, a:hover {
   color: #428bca;           
 }
+.login .ivu-select-dropdown {
+	margin-top: 47px !important; 
+}
+.font .ivu-form-item-label{
+	font-size: 14px !important;
+}
+.font .ivu-tag {
+	height: 35px;
+	line-height: 35px;
+	padding: 0 15px;
+	font-size: 13px;
+}
