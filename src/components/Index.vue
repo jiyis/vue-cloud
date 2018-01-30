@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="about">
-          <div class="title-red">关于我们<a href="#" class="more">更多>></a></div>
+          <div class="title-red">关于我们<router-link :to="'/pages/contact'" class="more">更多 >></router-link></div>
           <img :src="contact.titlepic" class="about-img" />
           <span class="about-content" v-html="contact.description">
           </span>

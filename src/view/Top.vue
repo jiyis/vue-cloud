@@ -9,7 +9,7 @@
         <div class="nav">
             <ul class="menu">
                 <li v-for="(item, index) in menus" :key="index">
-                    <router-link :to="item.url">{{ item.title }}</router-link>
+                    <router-link :to="item.url" :class="current == item.name ? 'active' : ''">{{ item.title }}</router-link>
                 </li>
                 <div style="clear:both;"></div>
             </ul>
@@ -48,28 +48,35 @@ export default {
         home: {
           title: '首页',
           url: '/',
+          name: 'Index',
         },
         course: {
           title: '在线课程',
           url: '/courses',
+          name: 'Course',
         },
         news: {
           title: '新闻资讯',
           url: '/news',
+          name: 'News',
         },
         teams: {
           title: '合作伙伴',
           url: '/pages/teams',
+          name: 'teams',
         },
         jobs: {
           title: '人才招聘',
           url: '/pages/jobs',
+          name: 'jobs',
         },
         contact: {
           title: '联系我们',
           url: '/pages/contact',
+          name: 'contact',
         },
       },
+      current: '',
     };
   },
   created() {
@@ -83,6 +90,16 @@ export default {
   methods: {
     init() {
       this.name = localStorage.name;
+      this.current = this.$route.name;
+      if (this.$route.name === 'PageDetail') {
+        this.current = this.$route.params.category;
+      }
+      if (this.$route.name === 'NewsDetail') {
+        this.current = 'News';
+      }
+      if (this.$route.name === 'CourseDetail') {
+        this.current = 'Course';
+      }
     },
     center() {
       this.$router.push('center');
@@ -168,7 +185,7 @@ export default {
                 font-weight: 800px; 
                 font-size: 16px;
             }
-            a:hover,a:active {
+            a:hover,a:active,.active {
                 border-bottom: 2px solid #eb2232;
             }
         }

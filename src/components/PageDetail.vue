@@ -52,6 +52,7 @@ export default {
       padding: 20px;
       line-height: 35px;
       text-indent: 30px;
+      min-height: 600px;
     }
   }
 </style>
