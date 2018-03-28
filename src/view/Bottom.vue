@@ -26,17 +26,11 @@
           <li style="padding: 0px 40px;"><a>友情链接</a></li>
           <li style="padding: 0px 40px;"><a href="http://www.pinghe.com/" target="_blank" rel="external nofollow">平和英语村</a></li>
           <li style="padding: 0px 40px;"><a href="http://www.jiajiaoban.com/" target="_blank" rel="external nofollow">智康1对1</a></li>
-          <li style="padding: 0px 40px;"><a href="http://m.niuyingyu.cn" target="_blank">小牛英语</a></li>
-          <li style="padding: 0px 40px;"><a href="http://yi-you.org" class="ylink" target="_blank" style="text-align: left;">高中一对一辅导</a></li>
         </ul>
         <ul>
           <li style="padding: 0px 40px;"><a href="http://www.topadmitchina.com/" class="ylink" target="_blank" rel="external nofollow" style="text-align: left;">达美云留学</a></li>
           <li style="padding: 0px 40px;"><a href="http://www.jiemo.net/" class="ylink" target="_blank" rel="external nofollow" style="text-align: left;">芥末留学</a></li>
           <li style="padding: 0px 40px;"><a href="http://www.ibantang.com" class="ylink" target="_blank" rel="external nofollow" style="text-align: left;">半塘</a></li>
-          <li style="padding: 0px 40px;"><a href="http://bj.tantuw.com" class="ylink" target="_blank" style="text-align: left;">北京教育培训</a></li>
-          <li style="padding: 0px 40px;"><a href="http://career-english.yjbys.com/" class="ylink" target="_blank" style="text-align: left;">职称英语</a></li>
-          <li style="padding: 0px 40px;"><a href="http://bbs.zhan.com" class="ylink" target="_blank" style="text-align: left;">留学论坛</a></li>
-          <li style="padding: 0px 40px;"><a href="http://www.kekenet.com" class="ylink" target="_blank" style="text-align: left;">可可英语</a></li>
         </ul>
         <a class="a-ewm a-ewm1"><i></i><span>微信账号：boruiyingyu</span></a>
         <a class="a-ewm a-ewm2"><i></i><span>微信账号：abc360_service</span></a>
@@ -116,7 +110,8 @@ export default {
   #footer .section-f2 {
     display: block;
     margin: 0 auto;
-    background-image: url('../assets/images/bg10.png')
+    background-image: url('../assets/images/bg10.png');
+    height: 300px;
   }
 
   #footer .section-f2 ul {

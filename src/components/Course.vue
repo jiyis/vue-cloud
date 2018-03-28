@@ -2,14 +2,17 @@
   <div class="content">
     <div class="filter">
       <div class="filter-tab" v-for="(item, key) in category" :key="key">
-        <span class="title">{{ item }}：</span>
+        <div class="title">{{ item }}：</div>
         <div class="filter-item">
-          <span class="item"><a @click="searchCategory(key, {name:'全部',id: ''})" :class="activeFilter[key] === '全部' ? 'active' : ''" href="javascript:void(0)">全部</a></span>
-          <span class="item" v-for="(value) in categoryItem[key]" :key="value.id" >
-            <a href="javascript:void(0)" @click="searchCategory(key, value)" :class="activeFilter[key] === value.name ? 'active' : ''">{{value.name}}</a>
-          </span>
+          <div class="item all-title"><a @click="searchCategory(key, {name:'全部',id: ''})" :class="activeFilter[key] === '全部' ? 'active' : ''" href="javascript:void(0)">全部</a></div>
+          <div class="right">
+            <div class="item" v-for="(value) in categoryItem[key]" :key="value.id" >
+              <a href="javascript:void(0)" @click="searchCategory(key, value)" :class="activeFilter[key] === value.name ? 'active' : ''">{{value.name}}</a>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="clear"></div>
     </div>
     <div class="hot-tab">
       <a href="javascript:void(0)" :class="sortActive ? 'active' : 'title'" @click="sortActive=true;sortCourse('updated_at')">近期热门</a>
@@ -28,9 +31,10 @@
             <span class="title"><router-link :to="'/courses/'+item.id">{{ item.name }}</router-link></span>
             <span class="content" v-html="item.description"></span>
             <span class="icon">
-              <Icon type="android-contacts"></Icon>{{ item.period }}课时
-              <Icon type="clock"></Icon>{{ item.minute }}分钟
-              <Tag color="blue" v-for="value in _.filter(item.category, { 'type': '适用年龄'})" :key="value.id">{{ value.name }}</Tag>
+              <span class="border"><Icon type="thumbsup"></Icon>{{ item.click }}</span>
+              <span class="border"><Icon type="android-contacts"></Icon>{{ item.period }}课时</span>
+              <span class="border"><Icon type="clock"></Icon>{{ item.minute }}分钟</span>
+              <span class="border"><Tag color="blue" v-for="value in _.filter(item.category, { 'type': '适用年龄'})" :key="value.id">{{ value.name }}</Tag></span>
             </span>
           </div>
           <div class="clear"></div>
@@ -52,6 +56,7 @@ export default {
         age: '适用年龄',
         stem: 'STEM侧重',
         price: '价格类型',
+        hangye: '行业领域',
       },
       categoryItem: {
         age: '',
@@ -68,6 +73,7 @@ export default {
         age: '全部',
         stem: '全部',
         price: '全部',
+        hangye: '全部',
       },
       sortActive: true,
       sortFilter: 'updated',
@@ -78,12 +84,14 @@ export default {
       this.$axios.get(`${config.apiDomain}/category/1`),
       this.$axios.get(`${config.apiDomain}/category/2`),
       this.$axios.get(`${config.apiDomain}/category/3`),
+      this.$axios.get(`${config.apiDomain}/category/5`),
       this.$axios.get(`${config.apiDomain}/courses`),
     ]).then(
-      this.$axios.spread((age, stem, price, courses) => {
+      this.$axios.spread((age, stem, price, hangye, courses) => {
         this.categoryItem.age = age.data.data;
         this.categoryItem.stem = stem.data.data;
         this.categoryItem.price = price.data.data;
+        this.categoryItem.hangye = hangye.data.data;
         this.courses = courses.data;
         this.total = courses.data.meta.total;
         this.per_page = courses.data.meta.per_page;
@@ -158,9 +166,9 @@ export default {
       margin: 0 auto;
       margin-top: 30px;
       background: #f1f1f1;
-      height: 200px;
+      height: 260px;
       .filter-tab {
-        padding: 26px 50px 15px;
+        padding: 8px 50px 21px;
         color: #666666;
         border-bottom: 1px dashed #e9e9e9; 
         .title {
@@ -168,14 +176,26 @@ export default {
           color: #333333;
           font-weight: bold;
           width: 10%;
+          padding-top:18px;
         }
         .filter-item {
+          width: 96%;
+          .all-title {
+            padding-top:20px !important;
+          }
           .item {
+            float:left;
             padding-left: 0px;
+            padding-top:16px;
             a{
               padding: 6px 18px;
               color: #333333;
             }
+          }
+          .right {
+            float:left;
+            width:80%;
+            line-height: 30px;
           }
           .active {
             color: #ffffff !important;
@@ -247,14 +267,27 @@ export default {
             }
             .icon {
               float: right;
+              width: 60%;
+              text-align: left;
               color: #808080;
+              .border {
+                width: 85px;
+                display: block;
+                float: left;
+                margin-left: 15px;
+              }
+              .border:first {
+                width: 50px;
+              }
+              .border:last-child {
+                width: auto;
+                margin-left: 5px;
+              }
               .ivu-icon {
-                padding-left: 50px;
-                padding-right: 6px;
-                padding-top: 5px;
+                padding-right: 8px;
               }
               .ivu-tag {
-                margin-left: 30px;
+                margin-right: 16px;
                 margin-top: -3px;
               }
             }

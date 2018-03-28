@@ -3,7 +3,7 @@
   <div class="container">
     <left></left>
     <div class="right">
-      <div class="Position"><span>你的位置：<a href="/">首页</a> &gt; <router-link class="title" :to="'/news/'">新闻动态</router-link></span></div>
+      <div class="Position"><span>你的位置：<a href="/">首页</a> &gt; <router-link class="title" :to="'/news/'">{{ getRouteName() }}</router-link></span></div>
       <div class="content">
         <div class="title"><h3>{{ content.title }}</h3></div>
         <div class="infos">发布时间： {{ content.created_at }}</div>
@@ -29,11 +29,24 @@ export default {
     left,
   },
   created() {
-    this.$axios.get(`${config.apiDomain}/lists/news/${this.$route.params.id}`).then((response) => {
+    this.$axios.get(`${config.apiDomain}/lists/${this.$route.params.category}/${this.$route.params.id}`).then((response) => {
       this.content = response.data;
     }, (error) => {
       this.$Message.error(error.toString());
     });
+  },
+  methods: {
+    getRouteName() {
+      let name = '';
+      if (this.$route.params.category === 'news') {
+        name = '新闻资讯';
+      } else if (this.$route.params.category === 'industry') {
+        name = '行业新闻';
+      } else { // seminar
+        name = '专题报道';
+      }
+      return name;
+    },
   },
 };
 </script>

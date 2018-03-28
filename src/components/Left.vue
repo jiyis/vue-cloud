@@ -24,11 +24,7 @@
     <div class="HeightTab clearfix"></div>
     <div class="Sbox">
       <div class="topic">联系我们&nbsp;&nbsp;&nbsp;Contact</div>
-      <div class="content">
-        <p>地址：上海浦东新区巨峰路1200号</p>
-        <p>电话：021-68856647</p>
-        <p>邮件：info#stemsky.com</p>
-        <p>网站：<a href="http://www.stemsky.com" target="_blank">http://www.stemsky.com</a></p>
+      <div class="content" v-html="contact.description">
       </div>
     </div>
   </div>
