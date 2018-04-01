@@ -3,11 +3,12 @@
   <div class="container">
     <left></left>
     <div class="right">
-      <div class="Position"><span>你的位置：<a href="/">首页</a> &gt; <a href="/News/">新闻动态</a></span></div>
+      <div class="Position"><span>你的位置：<a href="/">首页</a> &gt; <a href="/News/">{{ getRouteName() }}</a></span></div>
       <div class="content">
         <ul>
+          <li v-if="news.data.length === 0">暂无信息</li>
           <li class="item" v-for="(item, key) in news.data" :key="key">
-            <router-link target="_blank"  :to="'/news/'+item.id">{{ item.title }}</router-link>
+            <router-link target="_blank"  :to="'/'+$route.params.category+'/'+item.id">{{ item.title }}</router-link>
             <span class="time">[{{ item.created_at }}]</span>
           </li>
         </ul>
@@ -33,22 +34,41 @@ export default {
   components: {
     left,
   },
+  watch: {
+    $route() {
+      this.getData();
+    },
+  },
   created() {
-    this.$axios.get(`${config.apiDomain}/lists/news`).then((response) => {
-      this.news = response.data;
-      this.total = response.data.meta.total;
-      this.per_page = response.data.meta.per_page;
-    }, (error) => {
-      this.$Message.error(error.toString());
-    });
+    this.getData();
   },
   methods: {
     changepage(index) {
-      this.$axios.get(`${config.apiDomain}/lists/news?page=${index}`).then((response) => {
+      this.$axios.get(`${config.apiDomain}/lists/${this.$route.params.category}?page=${index}`).then((response) => {
         this.news = response.data;
       }, (error) => {
         this.$Message.error(error.toString());
       });
+    },
+    getData() {
+      this.$axios.get(`${config.apiDomain}/lists/${this.$route.params.category}`).then((response) => {
+        this.news = response.data;
+        this.total = response.data.meta.total;
+        this.per_page = response.data.meta.per_page;
+      }, (error) => {
+        this.$Message.error(error.toString());
+      });
+    },
+    getRouteName() {
+      let name = '';
+      if (this.$route.params.category === 'news') {
+        name = '新闻资讯';
+      } else if (this.$route.params.category === 'industry') {
+        name = '行业新闻';
+      } else { // seminar
+        name = '专题报道';
+      }
+      return name;
     },
   },
 };

@@ -77,9 +77,10 @@ export default {
     getData() {
       this.$axios.all([
         this.$axios.get(`${config.apiDomain}/courses/${this.$route.params.id}`),
+        this.$axios.get(`${config.apiDomain}/click/${this.$route.params.id}`),
         this.$axios.get(`${config.apiDomain}/courses?orderBy=updated_at&sortedBy=desc&limit=4`),
       ]).then(
-        this.$axios.spread((course, favCourses) => {
+        this.$axios.spread((course, click, favCourses) => {
           this.course = course.data;
           this.favCourses = favCourses.data;
         }, (error) => {

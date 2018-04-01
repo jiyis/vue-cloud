@@ -9,7 +9,7 @@
         :trigger="setting.trigger"
         :arrow="setting.arrow">
         <CarouselItem v-for="item in banners" :key="item.id">
-            <div class="demo-carousel"><img :src="item.titlepic"></div>
+          <div class="demo-carousel"><img :src="item.titlepic"></div>
         </CarouselItem>
     </Carousel>
   </div>  
@@ -17,10 +17,16 @@
 <script>
 import config from '../config/config.json';
 
+const banner1 = require('../assets/images/banner0.jpg');
+
 export default {
   data() {
     return {
-      banners: '',
+      banners: [
+        {
+          titlepic: banner1,
+        },
+      ],
       value3: 0,
       setting: {
         autoplay: true,
@@ -82,10 +88,5 @@ export default {
   .ivu-carousel-dots-inside {
     bottom:20px;
   }
-  .demo-carousel {
-    img {
-      height: 500px;
-      width: auto;
-    }
-  }
+
 </style>

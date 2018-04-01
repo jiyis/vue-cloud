@@ -1,26 +1,29 @@
 <template>
   <div class="index">
     <banner></banner>
+    <div><img src="../assets/images/ad1.jpg" width="100%"/></div>
+    <div><img src="../assets/images/ad2.jpg" width="100%"/></div>
     <div class="top">
       <ul>
         <li v-for="(value, key) in category" :key="key" class="category">
           <div class="category-top">
             <span class="titlepic"></span>
-            <span class="title">{{ value.title }}</span>
+            <span class="title"> <router-link class="title" :to="'/pages/'+key">{{ value.title }}</router-link></span>
             <span class="subtitle">{{ value.subTitle }}</span>
           </div>
           <div class="news" v-html="value.description">
           </div>
-          <router-link :to="'/pages/'+key" class="more">更多 >></router-link>
         </li>
       </ul>
     </div>
+    <spliders></spliders>
+    <div class="cooraption"></div>
     <div class="content-border">
       <div class="bottom">
         <div class="company-news">
-          <div class="title-red">公司新闻</div>
+          <div class="title-red">专家咨询</div>
           <div class="content" v-for="(item, key) in news" :key="key">
-            <router-link class="title" :to="'/news/'+item.id">{{ item.title }}</router-link>
+            <router-link class="title" :to="'/industry/'+item.id">{{ item.title }}</router-link>
             <a class="title" href="#"></a>
             <span class="desc" v-html="item.description"></span>
             <span class="time">{{ item.created_at}}</span>
@@ -39,6 +42,7 @@
 
 <script>
 import banner from '../components/Banner';
+import spliders from '../components/Splider';
 import config from '../config/config.json';
 
 export default {
@@ -73,6 +77,7 @@ export default {
   },
   components: {
     banner,
+    spliders,
   },
   created() {
     this.$axios.all([
@@ -80,7 +85,7 @@ export default {
       this.$axios.get(`${config.apiDomain}/pages/cooperation`),
       this.$axios.get(`${config.apiDomain}/pages/research`),
       this.$axios.get(`${config.apiDomain}/pages/knowledge`),
-      this.$axios.get(`${config.apiDomain}/lists/news?limit=3`),
+      this.$axios.get(`${config.apiDomain}/lists/industry?limit=3`),
       this.$axios.get(`${config.apiDomain}/pages/contact`),
     ]).then(
       this.$axios.spread((teaching, cooperation, research, knowledge, newsContent, contact) => {
@@ -290,5 +295,10 @@ export default {
       }
     }
 
+  }
+  .cooraption{
+    background: url("../assets/images/cobg.jpg") no-repeat;
+    width: 100%;
+    height: 267px;
   }
 </style>

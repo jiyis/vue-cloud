@@ -39,27 +39,19 @@ export default new Router({
       },
     },
     {
-      path: '/news',
-      name: 'News',
-      component: News,
-      meta: {
-        layout: true,
-      },
-    },
-    {
-      path: '/news/:id',
-      name: 'NewsDetail',
-      component: NewsDetail,
-      meta: {
-        layout: true,
-      },
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login,
       meta: {
         layout: false,
+      },
+    },
+    {
+      path: '/:category',
+      name: 'News',
+      component: News,
+      meta: {
+        layout: true,
       },
     },
     {
@@ -74,6 +66,14 @@ export default new Router({
       path: '/center',
       name: 'CenterDetail',
       component: CenterDetail,
+      meta: {
+        layout: true,
+      },
+    },
+    {
+      path: '/:category/:id',
+      name: 'NewsDetail',
+      component: NewsDetail,
       meta: {
         layout: true,
       },

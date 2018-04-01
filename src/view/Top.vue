@@ -1,9 +1,10 @@
 <template>
 <div>
-    <div class="header" :style="{backgroundImage: 'url(' + headerBg + ')'}">
+    <div class="header" style="background:#ffffff;"> <!--:style="{backgroundImage: 'url(' + headerBg + ')'}"-->
         <div class="top">
             <div class="logo">
-                <img src="../assets/images/logo.png"/>
+                <span class="img"><img src="../assets/images/logo.png"/></span>
+                <span class="title">江苏STEM云中心</span>
             </div>
         </div>
         <div class="nav">
@@ -14,8 +15,12 @@
                 <div style="clear:both;"></div>
             </ul>
             <div class="login">
-                <Icon type="ios-person" class="myicon" size="25"></Icon>
+                <Icon type="ios-cart" class="myicon" size="25"></Icon>
+                <router-link to="/pages/cart" v-if="!name">购物车</router-link>
+                <Icon type="android-exit" class="myicon" size="25"></Icon>
                 <router-link to="/login" v-if="!name">登录</router-link>
+                <Icon type="ios-person" class="myicon" size="25"></Icon>
+                <router-link to="/pages/register" v-if="!name">注册</router-link>
                 <Dropdown v-if="name">
                     <a href="javascript:void(0)">
                         {{ name }}
@@ -129,49 +134,63 @@ export default {
     .header{
        width: 100%;
        max-width: 1920px;
-       height: 188px;
+       height: 71px;
        position: relative;
     }
     .top {
-        width: 1200px;
-        margin: 0 auto;
+        width: 18%;
+        float: left;
+        .logo{
+            overflow: hidden;
+            .img {
+                margin-left: 50px;
+                margin-right: 10px;
+                margin-top: -5px;
+                display: block;
+                float: left;
+                width: 80px;
+                height: 71px;
+            }
+            .title {
+                line-height: 71px;
+                border-left: 1px dashed #57a3f3;
+                padding: 8px;
+                padding-left: 23px;
+            }
+        }
     }
     .top img {
-        margin-top: 45px;
+
     }
     .nav {
-        width: 1200px;
+        width: 82%;
+        float: left;
         height: 50px;
-        border: 1px solid #dcdcdc;
+        //border: 1px solid #dcdcdc;
         background: #ffffff;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
         margin:auto;
         .login {
             display: block;
-            float: left;
-            height: 50px;
-            width: 9%;
+            float: right;
+            border-left: 1px solid #dcdcdc;
             i {
-                padding:16px 8px;
+                padding:22px 8px;
             }
             a {
                 display: block;
                 float: left;
-                padding-left: 5px;
-                line-height: 57px;
+                padding-right: 20px;
+                padding-top: 22px;
             }
         }
     }
     .menu {
         display: block;
-        width: 90%;
+        width: 65%;
         float: left;
         li{
             float: left;
-            width: 15%;
+            width: 100px;
             list-style: none;
             color: #333333;
             padding-left: 3%;
@@ -180,7 +199,7 @@ export default {
                 display: block;
                 color: #333333;
                 text-decoration: none;
-                padding: 17px 0 9px;
+                padding: 20px 0 27px;
                 cursor: pointer;
                 font-weight: 800px; 
                 font-size: 16px;

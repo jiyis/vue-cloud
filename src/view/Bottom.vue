@@ -2,44 +2,6 @@
   <div class="bottom" id="footer">
     <section class="section section-f2">
       <div class="container">
-        <ul>
-          <li style="padding: 0px 40px;"><a href="/Index/news">新闻中心</a></li>
-          <li style="padding: 0px 40px;"><a href="/About">关于我们</a></li>
-          <li style="padding: 0px 40px;"><a href="/About#contactus">联系我们</a></li>
-          <!-- <li><a href="/Index/job">加入我们</a></li> -->
-          <li style="padding: 0px 40px;"><a href="/Job">加入我们</a></li>
-        </ul>
-        <ul>
-          <li style="padding: 0px 40px;"><a href="/Speaking">综合口语课程</a></li>
-          <!-- <li><a href="/Business">精品商务课程</a></li> -->
-          <li style="padding: 0px 40px;"><a href="/Youths">青少儿课程</a></li>
-          <li style="padding: 0px 40px;"><a class="btn-reg">免费领取</a></li>
-        </ul>
-        <ul>
-          <li style="padding: 0px 40px;"><a href="/Index/agent_apply" rel="external nofollow">代理招募</a></li>
-          <li style="padding: 0px 40px;"><a href="/Index/faq" rel="external nofollow">常见问题</a></li>
-          <!--<li><a href="/Index/experience" rel="external nofollow">会员体验</a></li>-->
-          <li style="padding: 0px 40px;"><a href="/Index/law" rel="external nofollow">法律声明</a></li>
-
-        </ul>
-        <ul>
-          <li style="padding: 0px 40px;"><a>友情链接</a></li>
-          <li style="padding: 0px 40px;"><a href="http://www.pinghe.com/" target="_blank" rel="external nofollow">平和英语村</a></li>
-          <li style="padding: 0px 40px;"><a href="http://www.jiajiaoban.com/" target="_blank" rel="external nofollow">智康1对1</a></li>
-          <li style="padding: 0px 40px;"><a href="http://m.niuyingyu.cn" target="_blank">小牛英语</a></li>
-          <li style="padding: 0px 40px;"><a href="http://yi-you.org" class="ylink" target="_blank" style="text-align: left;">高中一对一辅导</a></li>
-        </ul>
-        <ul>
-          <li style="padding: 0px 40px;"><a href="http://www.topadmitchina.com/" class="ylink" target="_blank" rel="external nofollow" style="text-align: left;">达美云留学</a></li>
-          <li style="padding: 0px 40px;"><a href="http://www.jiemo.net/" class="ylink" target="_blank" rel="external nofollow" style="text-align: left;">芥末留学</a></li>
-          <li style="padding: 0px 40px;"><a href="http://www.ibantang.com" class="ylink" target="_blank" rel="external nofollow" style="text-align: left;">半塘</a></li>
-          <li style="padding: 0px 40px;"><a href="http://bj.tantuw.com" class="ylink" target="_blank" style="text-align: left;">北京教育培训</a></li>
-          <li style="padding: 0px 40px;"><a href="http://career-english.yjbys.com/" class="ylink" target="_blank" style="text-align: left;">职称英语</a></li>
-          <li style="padding: 0px 40px;"><a href="http://bbs.zhan.com" class="ylink" target="_blank" style="text-align: left;">留学论坛</a></li>
-          <li style="padding: 0px 40px;"><a href="http://www.kekenet.com" class="ylink" target="_blank" style="text-align: left;">可可英语</a></li>
-        </ul>
-        <a class="a-ewm a-ewm1"><i></i><span>微信账号：boruiyingyu</span></a>
-        <a class="a-ewm a-ewm2"><i></i><span>微信账号：abc360_service</span></a>
       </div>
     </section>
     <section class="section section-f3">
@@ -116,7 +78,8 @@ export default {
   #footer .section-f2 {
     display: block;
     margin: 0 auto;
-    background-image: url('../assets/images/bg10.png')
+    background-image: url('../assets/images/bg10.jpg');
+    height: auto;
   }
 
   #footer .section-f2 ul {
