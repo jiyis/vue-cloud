@@ -43,8 +43,10 @@
       </div>
   </div>
 </template>
+
 <script>
 import '../assets/css/content.css';
+
 import detail from './Detail';
 import config from '../config/config.json';
 
@@ -52,6 +54,7 @@ export default {
   name: 'courseDetail',
   data() {
     return {
+      activeKey: 'key2',
       valueDisabled: 5,
       course: {
         titlepic: '',

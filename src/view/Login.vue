@@ -21,7 +21,7 @@
 				</div>
 				</form>
 			</div>
-			<p class="copy">Copyright © 2018 上海STEM云中心</p>
+			<p class="copy">Copyright © 2018 江苏STEM云中心</p>
   </div>		
 </template>
 

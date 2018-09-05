@@ -17,7 +17,7 @@
       </ul>
     </div>
     <spliders></spliders>
-    <div class="cooraption"></div>
+    <div class="cooraption"><img src="../assets/images/cobg.jpg" /></div>
     <div class="content-border">
       <div class="bottom">
         <div class="company-news">
@@ -297,7 +297,7 @@ export default {
 
   }
   .cooraption{
-    background: url("../assets/images/cobg.jpg") no-repeat;
+    /*background: url("../assets/images/cobg.jpg") no-repeat;*/
     width: 100%;
     height: 267px;
   }

@@ -47,6 +47,14 @@ export default new Router({
       },
     },
     {
+      path: '/center',
+      name: 'CenterDetail',
+      component: CenterDetail,
+      meta: {
+        layout: true,
+      },
+    },
+    {
       path: '/:category',
       name: 'News',
       component: News,
@@ -58,14 +66,6 @@ export default new Router({
       path: '/pages/:category',
       name: 'PageDetail',
       component: PageDetail,
-      meta: {
-        layout: true,
-      },
-    },
-    {
-      path: '/center',
-      name: 'CenterDetail',
-      component: CenterDetail,
       meta: {
         layout: true,
       },

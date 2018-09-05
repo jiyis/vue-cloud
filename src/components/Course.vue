@@ -55,13 +55,11 @@ export default {
       category: {
         age: '适用年龄',
         stem: 'STEM侧重',
-        price: '价格类型',
         hangye: '行业领域',
       },
       categoryItem: {
         age: '',
         stem: '',
-        price: '',
       },
       courses: '',
       total: 5,
@@ -83,14 +81,12 @@ export default {
     this.$axios.all([
       this.$axios.get(`${config.apiDomain}/category/1`),
       this.$axios.get(`${config.apiDomain}/category/2`),
-      this.$axios.get(`${config.apiDomain}/category/3`),
       this.$axios.get(`${config.apiDomain}/category/5`),
       this.$axios.get(`${config.apiDomain}/courses`),
     ]).then(
       this.$axios.spread((age, stem, price, hangye, courses) => {
         this.categoryItem.age = age.data.data;
         this.categoryItem.stem = stem.data.data;
-        this.categoryItem.price = price.data.data;
         this.categoryItem.hangye = hangye.data.data;
         this.courses = courses.data;
         this.total = courses.data.meta.total;

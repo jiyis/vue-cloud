@@ -44,15 +44,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
   .swiper {
-    height:auto;
+    height:800px;
     width: 100%;
+    overflow: hidden;
   }
-  .splider img{
-    height: 820px;
-  }
-  .demo-carousel img{
-    width: 100% !important;
-  }
+
   .ivu-carousel-dots li button.radius {
     background: #ffffff !important;
     opacity: 1;
@@ -86,10 +82,5 @@ export default {
   }
   .ivu-carousel-dots-inside {
     bottom:20px;
-  }
-  .demo-carousel {
-    img {
-      width: auto;
-    }
   }
 </style>
