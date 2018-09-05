@@ -84,7 +84,7 @@ export default {
       this.$axios.get(`${config.apiDomain}/category/5`),
       this.$axios.get(`${config.apiDomain}/courses`),
     ]).then(
-      this.$axios.spread((age, stem, price, hangye, courses) => {
+      this.$axios.spread((age, stem, hangye, courses) => {
         this.categoryItem.age = age.data.data;
         this.categoryItem.stem = stem.data.data;
         this.categoryItem.hangye = hangye.data.data;
